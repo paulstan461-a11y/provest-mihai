@@ -1,15 +1,21 @@
+import Image from "next/image"
 import Link from "next/link"
 import { CheckCircle, Phone, ArrowRight, Home, Lightbulb, Thermometer, Maximize } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { AnimatedSection } from "@/components/animated-section"
 import type { Metadata } from "next"
+import {
+  coverageCountiesOg,
+  coverageCountiesSentence,
+  phoneDisplay,
+  phoneE164,
+} from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Mansardări Maramureș | Acopvest - Transformă Podul în Spațiu Locuibil",
-  description:
-    "Servicii complete de mansardare în Maramureș. Transformăm podul casei în cameră locuibilă cu izolație termică, ferestre Velux și finisaje de calitate. Solicită ofertă!",
-  keywords: "mansardari maramures, mansarda, amenajare pod, izolatie termica, ferestre velux, Acopvest",
+  title: "Mansardări Acoperiș | Acopvest — Spațiu Locuibil la Etaj",
+  description: `Mansardări complete în ${coverageCountiesSentence}: pod locuibil, izolație termică, Velux, finisaje. Solicită ofertă!`,
+  keywords: `mansardări, amenajare pod, izolație termică, ferestre Velux, acoperiș, Acopvest, ${coverageCountiesOg}`,
 }
 
 const benefits = [
@@ -104,20 +110,20 @@ export default function MansardariPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimatedSection animation="slide-in-left" className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <AnimatedSection animation="slide-in-left" immediate className="space-y-6 rounded-2xl border border-white/10 bg-secondary p-6 text-secondary-foreground lg:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
                 <Home className="h-4 w-4" />
                 Transformă Podul în Casă
               </div>
-              <h1 className="font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl text-balance">
+              <h1 className="font-serif text-4xl font-bold leading-tight text-secondary-foreground sm:text-5xl text-balance">
                 Servicii de <span className="text-primary">Mansardare</span> Complete
               </h1>
-              <p className="text-lg text-muted-foreground text-pretty">
-                Ai nevoie de mai mult spațiu? Transformăm podul casei tale într-o cameră modernă, confortabilă și
-                eficientă energetic. De la structură la finisaje, ne ocupăm de tot!
+              <p className="text-lg text-secondary-foreground/80 text-pretty">
+                Mai mult spațiu locuibil în {coverageCountiesSentence}: transformăm podul într-o cameră modernă, cu
+                izolație și finisaje. De la structură la acoperiș, gestionăm proiectul complet.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
@@ -127,7 +133,7 @@ export default function MansardariPage() {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <a href="tel:+40756811640" className="flex items-center gap-2">
+                  <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                     <Phone className="h-5 w-5" />
                     Sună Acum
                   </a>
@@ -135,11 +141,19 @@ export default function MansardariPage() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <img
+            <AnimatedSection
+              animation="slide-in-right"
+              immediate
+              className="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-2xl"
+            >
+              <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ProVestAcoperis-Montaj-Tigla-Ceramica-4-mGK1DZFMOQ7qXvwScWR64TgiF47gWU.webp"
-                alt="Acoperiș cu ferestre de mansardă Velux"
-                className="rounded-2xl shadow-2xl object-cover aspect-[4/3] w-full"
+                alt="Acoperiș cu ferestre de mansardă Velux — Acopvest"
+                fill
+                priority
+                fetchPriority="high"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -150,7 +164,7 @@ export default function MansardariPage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Avantajele Mansardării</h2>
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Avantajele Mansardării</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               De ce să alegi să transformi podul într-un spațiu locuibil?
             </p>
@@ -159,11 +173,11 @@ export default function MansardariPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit, index) => (
               <AnimatedSection key={benefit.title} animation="fade-in-up" delay={index * 100}>
-                <Card className="h-full text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <Card className="h-full border-primary/20 bg-primary text-center text-primary-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <CardContent className="p-6">
                     <benefit.icon className="mx-auto mb-4 h-12 w-12 text-primary" />
                     <h3 className="mb-2 font-serif text-xl font-semibold">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                    <p className="text-sm text-primary-foreground/90">{benefit.description}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -173,21 +187,21 @@ export default function MansardariPage() {
       </section>
 
       {/* Services Included */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-background py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Ce Include Serviciul?</h2>
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Ce Include Serviciul?</h2>
             <p className="mt-4 text-lg text-muted-foreground">Oferim servicii complete de mansardare, de la A la Z</p>
           </AnimatedSection>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <AnimatedSection key={service.title} animation="scale-in" delay={index * 100}>
-                <Card className="h-full">
+                <Card className="h-full border-white/10 bg-secondary text-secondary-foreground">
                   <CardContent className="p-6">
                     <span className="mb-4 inline-block text-4xl">{service.icon}</span>
                     <h3 className="mb-2 font-serif text-xl font-semibold">{service.title}</h3>
-                    <p className="text-sm text-muted-foreground">{service.description}</p>
+                    <p className="text-sm text-secondary-foreground/80">{service.description}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -221,21 +235,21 @@ export default function MansardariPage() {
       </section>
 
       {/* Ideas */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimatedSection animation="slide-in-left">
-              <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl text-balance">
+              <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl text-balance">
                 Idei pentru Mansarda Ta
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-lg text-secondary-foreground/80">
                 Mansarda poate deveni orice îți dorești. Iată câteva idei populare:
               </p>
               <ul className="mt-6 space-y-3">
                 {ideas.map((idea, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span className="text-foreground">{idea}</span>
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <span className="text-secondary-foreground">{idea}</span>
                   </li>
                 ))}
               </ul>
@@ -246,11 +260,17 @@ export default function MansardariPage() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <img
+            <AnimatedSection
+              animation="slide-in-right"
+              delay={200}
+              className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-xl"
+            >
+              <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ProVestAcoperis-Montaj-Tigla-Metalica-3-dcZCbzgX5tg5UvuOf6hHJKAhT3yiQV.webp"
-                alt="Casă finalizată cu mansardă"
-                className="rounded-2xl shadow-xl object-cover aspect-video w-full"
+                alt="Casă cu mansardă și țiglă metalică"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -277,9 +297,9 @@ export default function MansardariPage() {
                 className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary bg-transparent"
                 asChild
               >
-                <a href="tel:+40756811640" className="flex items-center gap-2">
+                <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  0756 811 640
+                  {phoneDisplay}
                 </a>
               </Button>
             </div>

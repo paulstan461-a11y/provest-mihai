@@ -1,15 +1,21 @@
+import Image from "next/image"
 import Link from "next/link"
 import { CheckCircle, AlertTriangle, Clock, Shield, Phone, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { AnimatedSection } from "@/components/animated-section"
 import type { Metadata } from "next"
+import {
+  coverageCountiesOg,
+  coverageCountiesSentence,
+  phoneDisplay,
+  phoneE164,
+} from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Reparații Acoperișuri Maramureș | Acopvest - Intervenții Rapide",
-  description:
-    "Servicii profesionale de reparații acoperișuri în Maramureș. Rezolvăm infiltrații, înlocuim țigle deteriorate, reparăm jgheaburi. Intervenții rapide, garanție lucrări. Sună acum!",
-  keywords: "reparatii acoperis maramures, infiltratii acoperis, reparatii tigla metalica, jgheaburi, Acopvest",
+  title: "Reparații Acoperișuri România | Acopvest — Intervenții Rapide",
+  description: `Reparații acoperiș profesionale în ${coverageCountiesSentence}: infiltrații, țiglă deteriorată, jgheaburi. Intervenții rapide, garanție. Sună acum!`,
+  keywords: `reparații acoperiș, infiltrații acoperiș, jgheaburi, țiglă metalică, Acopvest, ${coverageCountiesOg}`,
 }
 
 const problems = [
@@ -82,24 +88,24 @@ export default function ReparatiiAcopersuriPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimatedSection animation="slide-in-left" className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive">
+            <AnimatedSection animation="slide-in-left" immediate className="space-y-6 rounded-2xl border border-white/10 bg-secondary p-6 text-secondary-foreground lg:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
                 <AlertTriangle className="h-4 w-4" />
                 Intervenții Rapide în 24-48h
               </div>
-              <h1 className="font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl text-balance">
+              <h1 className="font-serif text-4xl font-bold leading-tight text-secondary-foreground sm:text-5xl text-balance">
                 Reparații <span className="text-primary">Acoperișuri</span> Profesionale
               </h1>
-              <p className="text-lg text-muted-foreground text-pretty">
+              <p className="text-lg text-secondary-foreground/80 text-pretty">
                 Infiltrații? Țigle sparte? Jgheaburi deteriorate? Echipa Acopvest intervine rapid pentru a
                 proteja casa ta de intemperii. Oferim diagnostic gratuit și soluții durabile cu garanție.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
-                  <a href="tel:+40756811640" className="flex items-center gap-2">
+                  <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                     <Phone className="h-5 w-5" />
                     Sună pentru Urgențe
                   </a>
@@ -110,11 +116,19 @@ export default function ReparatiiAcopersuriPage() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <img
+            <AnimatedSection
+              animation="slide-in-right"
+              immediate
+              className="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-2xl"
+            >
+              <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ProVestAcoperis-Montaj-Tigla-Ceramica-5-cKLVtGu1mhs070U8kCTpBLR2s2WbJv.webp"
-                alt="Reparații acoperiș profesionale"
-                className="rounded-2xl shadow-2xl object-cover aspect-[4/3] w-full"
+                alt="Reparații acoperiș profesionale — Acopvest"
+                fill
+                priority
+                fetchPriority="high"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -125,7 +139,7 @@ export default function ReparatiiAcopersuriPage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Ce Probleme Rezolvăm?</h2>
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Ce Probleme Rezolvăm?</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Avem experiență în rezolvarea tuturor tipurilor de probleme ale acoperișurilor
             </p>
@@ -134,11 +148,11 @@ export default function ReparatiiAcopersuriPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {problems.map((problem, index) => (
               <AnimatedSection key={problem.title} animation="fade-in-up" delay={index * 100}>
-                <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <Card className="h-full border-white/10 bg-secondary text-secondary-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <CardContent className="p-6">
                     <span className="mb-4 inline-block text-4xl">{problem.icon}</span>
                     <h3 className="mb-2 font-serif text-xl font-semibold">{problem.title}</h3>
-                    <p className="text-sm text-muted-foreground">{problem.description}</p>
+                    <p className="text-sm text-secondary-foreground/80">{problem.description}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -148,32 +162,38 @@ export default function ReparatiiAcopersuriPage() {
       </section>
 
       {/* Warning Signs */}
-      <section className="bg-destructive/5 py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimatedSection animation="slide-in-left">
-              <AlertTriangle className="mb-4 h-12 w-12 text-destructive" />
-              <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl text-balance">
+              <AlertTriangle className="mb-4 h-12 w-12 text-primary" />
+              <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl text-balance">
                 Semne că Ai Nevoie de Reparații Urgente
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
+              <p className="mt-4 text-lg text-secondary-foreground/80">
                 Nu ignora aceste semne! O intervenție rapidă poate preveni daune majore și costuri mult mai mari.
               </p>
               <ul className="mt-6 space-y-3">
                 {urgentSigns.map((sign, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-destructive" />
-                    <span className="text-foreground">{sign}</span>
+                    <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <span className="text-secondary-foreground">{sign}</span>
                   </li>
                 ))}
               </ul>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <img
+            <AnimatedSection
+              animation="slide-in-right"
+              delay={200}
+              className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-xl"
+            >
+              <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ProVestAcoperis-Montaj-Tigla-Ceramica-3-GbpVlh8hPbJRAWxesTgRtXJwDpewbw.webp"
-                alt="Acoperiș în condiții de iarnă care necesită atenție"
-                className="rounded-2xl shadow-xl object-cover aspect-video w-full"
+                alt="Acoperiș în condiții de iarnă — inspecție și reparații"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -184,7 +204,7 @@ export default function ReparatiiAcopersuriPage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Cum Lucrăm?</h2>
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Cum Lucrăm?</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Proces simplu și transparent de la evaluare până la finalizare
             </p>
@@ -210,15 +230,15 @@ export default function ReparatiiAcopersuriPage() {
       </section>
 
       {/* Guarantees */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-background py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 lg:grid-cols-3">
             <AnimatedSection animation="fade-in-up">
-              <Card className="h-full text-center">
+              <Card className="h-full border-primary/20 bg-primary text-center text-primary-foreground">
                 <CardContent className="p-8">
                   <Clock className="mx-auto mb-4 h-12 w-12 text-primary" />
                   <h3 className="mb-2 font-serif text-xl font-semibold">Intervenție Rapidă</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-primary-foreground/90">
                     În cazul urgențelor, intervenim în 24-48 de ore pentru a preveni daune suplimentare.
                   </p>
                 </CardContent>
@@ -226,11 +246,11 @@ export default function ReparatiiAcopersuriPage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-in-up" delay={100}>
-              <Card className="h-full text-center">
+              <Card className="h-full border-primary/20 bg-primary text-center text-primary-foreground">
                 <CardContent className="p-8">
                   <Shield className="mx-auto mb-4 h-12 w-12 text-primary" />
                   <h3 className="mb-2 font-serif text-xl font-semibold">Garanție Lucrări</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-primary-foreground/90">
                     Toate lucrările de reparații beneficiază de garanție, pentru liniștea dumneavoastră.
                   </p>
                 </CardContent>
@@ -238,11 +258,11 @@ export default function ReparatiiAcopersuriPage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-in-up" delay={200}>
-              <Card className="h-full text-center">
+              <Card className="h-full border-primary/20 bg-primary text-center text-primary-foreground">
                 <CardContent className="p-8">
                   <CheckCircle className="mx-auto mb-4 h-12 w-12 text-primary" />
                   <h3 className="mb-2 font-serif text-xl font-semibold">Materiale Certificate</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-primary-foreground/90">
                     Folosim doar materiale de calitate superioară, certificate și cu garanție de la producător.
                   </p>
                 </CardContent>
@@ -264,9 +284,9 @@ export default function ReparatiiAcopersuriPage() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="secondary" asChild>
-                <a href="tel:+40756811640" className="flex items-center gap-2">
+                <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  0756 811 640
+                  {phoneDisplay}
                 </a>
               </Button>
               <Button

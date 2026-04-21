@@ -1,46 +1,57 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { Inter, Source_Serif_4 } from "next/font/google"
 
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { AppToaster } from "@/components/app-toaster"
+import { JsonLd } from "@/components/json-ld"
+import { FloatingContactCta } from "@/components/floating-contact-cta"
+import {
+  coverageCountiesOg,
+  coverageCountiesSentence,
+  defaultSiteKeywords,
+  siteUrl,
+} from "@/lib/site-config"
 
-import { Source_Serif_4, Inter, Inter as V0_Font_Inter, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
-
-// Initialize fonts
-const _inter = V0_Font_Inter({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _geistMono = V0_Font_Geist_Mono({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] })
-
-const sourceSerif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" })
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+// Limit font weights to those used in Tailwind (performance / smaller CSS).
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "600", "700"],
+})
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
+})
 
 export const metadata: Metadata = {
-  title: "Acopvest | Acoperișuri Maramureș - Montaj, Reparații, Mansardări",
-  description:
-    "Servicii profesionale de acoperișuri în Maramureș și județele vecine. Montaj țiglă metalică, reparații acoperișuri, dulgherie și mansardări. 10+ ani experiență, 2000+ clienți mulțumiți. Solicită ofertă gratuită!",
-  keywords:
-    "acoperis maramures, montaj acoperis, reparatii acoperis, tigla metalica, dulgherie, mansardari, Acopvest, acoperis baia mare",
+  metadataBase: new URL(siteUrl),
+  title: "Acopvest | Acoperișuri România — Montaj, Reparații, Mansardări",
+  description: `Montaj acoperiș, reparații acoperiș și țiglă metalică în ${coverageCountiesSentence}. Dulgherie și mansardări. Bază în Satu Mare. 10+ ani experiență, 2000+ clienți. Ofertă gratuită.`,
+  keywords: defaultSiteKeywords,
   openGraph: {
-    title: "Acopvest | Acoperișuri Profesionale în Maramureș",
-    description:
-      "Montaj și reparații acoperișuri cu garanție. 10+ ani experiență în Maramureș, Satu Mare, Bistrița-Năsăud, Cluj.",
+    title: "Acopvest | Acoperișuri profesionale în România",
+    description: `Montaj și reparații acoperiș cu garanție. Acoperim ${coverageCountiesOg}.`,
     type: "website",
     locale: "ro_RO",
+    url: siteUrl,
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://acopvest.ro",
+    canonical: siteUrl,
   },
-    generator: 'v0.app'
 }
 
 export const viewport = {
-  themeColor: "#8B1E3F",
+  // Keep browser chrome aligned with the brand accent.
+  themeColor: "#D72626",
   width: "device-width",
   initialScale: 1,
 }
@@ -53,9 +64,12 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <body className={`${sourceSerif.variable} ${inter.variable} font-sans antialiased`}>
+        <JsonLd />
         <Header />
         <main>{children}</main>
         <Footer />
+        <FloatingContactCta />
+        <AppToaster />
         <Analytics />
       </body>
     </html>

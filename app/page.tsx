@@ -1,15 +1,16 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Shield, Clock, Users, Star, CheckCircle, Phone, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { AnimatedSection } from "@/components/animated-section"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Acopvest | Acoperișuri Maramureș - Montaj, Reparații, Mansardări",
-  description:
-    "Firma de acoperișuri în Maramureș cu peste 10 ani experiență. Montaj țiglă metalică, reparații, dulgherie și mansardări. 2000+ clienți mulțumiți. Solicită ofertă gratuită!",
-}
+import {
+  businessLocality,
+  coverageCounties,
+  coverageCountiesSentence,
+  phoneDisplay,
+  phoneE164,
+} from "@/lib/site-config"
 
 const services = [
   {
@@ -56,61 +57,76 @@ const benefits = [
   "Program flexibil, adaptabil nevoilor clientului",
 ]
 
+/** Hero image (LCP): remote blob; dimensions stabilize layout. */
+const heroImageSrc =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/10-6vuLqn5RviUNYJsDCNhOJtKCq50GMF.webp"
+const secondaryImageSrc =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13-MGZSoW9nnDbjkjn0POb7GvT4534pfo.webp"
+
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
+      {/* Hero: immediate sections so LCP image is not hidden behind opacity-0. */}
+      <section className="relative overflow-hidden bg-secondary py-16 lg:py-24">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] opacity-5" />
         <div className="container relative mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimatedSection animation="slide-in-left" className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <AnimatedSection animation="slide-in-left" immediate className="space-y-6 rounded-2xl border border-white/10 bg-secondary p-6 text-secondary-foreground lg:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
                 <Shield className="h-4 w-4" />
-                Peste 10 ani de experiență în Maramureș
+                Peste 10 ani — montaj acoperiș și țiglă metalică
               </div>
-              <h1 className="font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl text-balance">
+              <h1 className="font-serif text-4xl font-bold leading-tight text-secondary-foreground sm:text-5xl lg:text-6xl text-balance">
                 Acoperișuri de <span className="text-primary">Încredere</span> pentru Casa Ta
               </h1>
-              <p className="text-lg text-muted-foreground lg:text-xl text-pretty">
-                Suntem echipa Acopvest din Baia Mare, specialiști în montaj, reparații acoperișuri, dulgherie și
-                mansardări. Cu peste 2000 de clienți mulțumiți, oferim calitate și profesionalism în Maramureș și
-                județele vecine.
+              <p className="text-lg text-secondary-foreground/80 lg:text-xl text-pretty">
+                Echipa Acopvest din {businessLocality} — specialiști în montaj acoperiș, reparații acoperiș, dulgherie și
+                mansardări. Peste 2000 de clienți mulțumiți; lucrăm în {coverageCountiesSentence}.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
-                  <Link href="/contact" className="flex items-center gap-2">
-                    <MessageCircle className="h-5 w-5" />
-                    Solicită Ofertă Gratuită
+                  <a
+                    href={`tel:${phoneE164}`}
+                    data-cta="hero-call"
+                    data-phone={phoneE164}
+                    className="flex items-center gap-2"
+                  >
+                    <Phone className="h-5 w-5" />
+                    Sună Instant
                     <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </a>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <a href="tel:+40756811640" className="flex items-center gap-2">
-                    <Phone className="h-5 w-5" />
-                    Sună Acum
-                  </a>
+                  <Link href="/contact" className="flex items-center gap-2">
+                    <MessageCircle className="h-5 w-5" />
+                    Cere Ofertă
+                  </Link>
                 </Button>
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl" />
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/10-6vuLqn5RviUNYJsDCNhOJtKCq50GMF.webp"
-                  alt="Montaj profesional acoperiș cu țiglă metalică"
-                  className="relative rounded-2xl shadow-2xl object-cover aspect-[4/3]"
+            <AnimatedSection animation="slide-in-right" immediate delay={0} className="relative">
+              <div className="absolute -inset-4 rounded-2xl bg-linear-to-br from-primary/20 to-accent/20 blur-2xl" />
+              <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-2xl">
+                <Image
+                  src={heroImageSrc}
+                  alt="Montaj profesional acoperiș cu țiglă metalică — Acopvest"
+                  width={1200}
+                  height={900}
+                  priority
+                  fetchPriority="high"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-full w-full object-cover"
                 />
-                <div className="absolute -bottom-6 -left-6 rounded-xl bg-card p-4 shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                      <Star className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-foreground">2000+</p>
-                      <p className="text-sm text-muted-foreground">Clienți Mulțumiți</p>
-                    </div>
+              </div>
+              <div className="absolute -bottom-6 -left-6 rounded-xl bg-card p-4 shadow-lg">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                    <Star className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-foreground">2000+</p>
+                    <p className="text-sm text-muted-foreground">Clienți Mulțumiți</p>
                   </div>
                 </div>
               </div>
@@ -120,15 +136,15 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="border-y border-border bg-card py-12">
+      <section className="border-y border-primary/20 bg-primary py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
             {stats.map((stat, index) => (
               <AnimatedSection key={stat.label} animation="fade-in-up" delay={index * 100}>
                 <div className="text-center">
-                  <stat.icon className="mx-auto mb-3 h-8 w-8 text-primary" />
-                  <p className="font-serif text-3xl font-bold text-foreground lg:text-4xl">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                  <stat.icon className="mx-auto mb-3 h-8 w-8 text-primary-foreground" />
+                  <p className="font-serif text-3xl font-bold text-primary-foreground lg:text-4xl">{stat.value}</p>
+                  <p className="text-sm text-primary-foreground/85">{stat.label}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -144,19 +160,18 @@ export default function HomePage() {
               Serviciile Noastre
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Oferim o gamă completă de servicii pentru acoperișul casei dumneavoastră, de la montaj la reparații și
-              întreținere.
+              Montaj acoperiș, reparații acoperiș și întreținere — soluții complete pentru locuința ta.
             </p>
           </AnimatedSection>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {services.map((service, index) => (
               <AnimatedSection key={service.title} animation="scale-in" delay={index * 100}>
-                <Card className="group h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <Card className="group h-full border-white/10 bg-secondary text-secondary-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <CardContent className="flex h-full flex-col p-6">
                     <span className="mb-4 text-4xl">{service.icon}</span>
                     <h3 className="mb-2 font-serif text-xl font-semibold">{service.title}</h3>
-                    <p className="mb-4 flex-1 text-sm text-muted-foreground">{service.description}</p>
+                    <p className="mb-4 flex-1 text-sm text-secondary-foreground/80">{service.description}</p>
                     <Link
                       href={service.href}
                       className="inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
@@ -173,30 +188,35 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimatedSection animation="slide-in-left">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13-MGZSoW9nnDbjkjn0POb7GvT4534pfo.webp"
-                alt="Echipa Acopvest montând acoperiș"
-                className="rounded-2xl shadow-xl object-cover aspect-[3/4] w-full max-w-md mx-auto"
-              />
+              <div className="relative mx-auto aspect-3/4 w-full max-w-md overflow-hidden rounded-2xl shadow-xl">
+                <Image
+                  src={secondaryImageSrc}
+                  alt="Echipa Acopvest la montaj acoperiș"
+                  width={900}
+                  height={1200}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </AnimatedSection>
 
             <AnimatedSection animation="slide-in-right" delay={200}>
-              <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl text-balance">
+              <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl text-balance">
                 De Ce Să Alegi Acopvest?
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Cu peste 10 ani de experiență în domeniul construcțiilor și acoperișurilor, am devenit unul dintre cei
-                mai de încredere parteneri pentru proiectele de acoperișuri din Maramureș.
+              <p className="mt-4 text-lg text-secondary-foreground/80">
+                Peste 10 ani în construcții și acoperișuri — partener de încredere pentru montaj țiglă metalică și
+                reparații în {coverageCountiesSentence}.
               </p>
               <ul className="mt-6 space-y-3">
                 {benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span className="text-foreground">{benefit}</span>
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <span className="text-secondary-foreground">{benefit}</span>
                   </li>
                 ))}
               </ul>
@@ -216,19 +236,19 @@ export default function HomePage() {
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Zone de Acoperire</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Oferim servicii profesionale de acoperișuri în Maramureș și județele învecinate
+              Servicii de acoperiș și țiglă metalică în {coverageCountiesSentence}
             </p>
           </AnimatedSection>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {["Maramureș", "Satu Mare", "Bistrița-Năsăud", "Cluj", "Sălaj"].map((county, index) => (
-              <AnimatedSection key={county} animation="fade-in-up" delay={index * 100}>
-                <Card className="text-center transition-all duration-300 hover:border-primary hover:shadow-md">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            {coverageCounties.map((city, index) => (
+              <AnimatedSection key={city} animation="fade-in-up" delay={index * 100}>
+                <Card className="border-white/10 bg-secondary text-center text-secondary-foreground transition-all duration-300 hover:border-primary hover:shadow-md">
                   <CardContent className="p-6">
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                       <span className="text-xl">📍</span>
                     </div>
-                    <h3 className="font-serif text-lg font-semibold">{county}</h3>
+                    <h3 className="font-serif text-lg font-semibold">{city}</h3>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -245,8 +265,7 @@ export default function HomePage() {
               Ai Nevoie de un Acoperiș Nou sau de Reparații?
             </h2>
             <p className="mt-4 text-lg text-primary-foreground/90">
-              Contactează-ne pentru o evaluare gratuită la fața locului și o ofertă personalizată. Echipa noastră este
-              gata să te ajute!
+              Contactează-ne pentru evaluare gratuită la fața locului și ofertă personalizată.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="secondary" asChild>
@@ -261,9 +280,9 @@ export default function HomePage() {
                 className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary bg-transparent"
                 asChild
               >
-                <a href="tel:+40756811640" className="flex items-center gap-2">
+                <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  0756 811 640
+                  {phoneDisplay}
                 </a>
               </Button>
             </div>

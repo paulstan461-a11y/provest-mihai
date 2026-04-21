@@ -1,16 +1,21 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Phone, Shield, Award, Truck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { AnimatedSection } from "@/components/animated-section"
 import type { Metadata } from "next"
+import {
+  coverageCountiesOg,
+  coverageCountiesSentence,
+  phoneDisplay,
+  phoneE164,
+} from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Montaj Acoperișuri Maramureș | Acopvest - Țiglă Metalică Premium",
-  description:
-    "Montaj profesional acoperișuri noi cu țiglă metalică în Maramureș. Modele variate: Clasic, Gotic, Balcanic. Garanție extinsă, prețuri competitive. Solicită ofertă gratuită!",
-  keywords:
-    "montaj acoperis maramures, tigla metalica, acoperis nou, Acopvest, acoperis casa, montaj profesional",
+  title: "Montaj Acoperișuri România | Acopvest — Țiglă Metalică",
+  description: `Montaj profesional acoperiș nou cu țiglă metalică în ${coverageCountiesSentence}. Modele: Clasic, Gotic, Balcanic și altele. Garanție, prețuri corecte. Ofertă gratuită!`,
+  keywords: `montaj acoperiș, țiglă metalică, acoperiș nou, Acopvest, ${coverageCountiesOg}, montaj profesional`,
 }
 
 const roofTypes = [
@@ -101,18 +106,18 @@ export default function MontajAcopersuriPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimatedSection animation="slide-in-left" className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <AnimatedSection animation="slide-in-left" immediate className="space-y-6 rounded-2xl border border-white/10 bg-secondary p-6 text-secondary-foreground lg:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
                 <Award className="h-4 w-4" />
                 Montaj Profesional cu Garanție
               </div>
-              <h1 className="font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl text-balance">
+              <h1 className="font-serif text-4xl font-bold leading-tight text-secondary-foreground sm:text-5xl text-balance">
                 Montaj <span className="text-primary">Acoperișuri</span> Noi
               </h1>
-              <p className="text-lg text-muted-foreground text-pretty">
+              <p className="text-lg text-secondary-foreground/80 text-pretty">
                 Construiești sau renovezi? Echipa Acopvest îți oferă montaj profesional de acoperișuri cu țiglă
                 metalică de cea mai bună calitate. Alegem împreună modelul perfect pentru casa ta!
               </p>
@@ -129,11 +134,15 @@ export default function MontajAcopersuriPage() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="slide-in-right" delay={200}>
-              <img
+            <AnimatedSection animation="slide-in-right" immediate className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-2xl">
+              <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/7-lwPuST1UCW4Ul99oMXmUBeC4rIf1AU.webp"
-                alt="Montaj acoperiș nou cu țiglă metalică"
-                className="rounded-2xl shadow-2xl object-cover aspect-video w-full"
+                alt="Montaj acoperiș nou cu țiglă metalică — Acopvest"
+                fill
+                priority
+                fetchPriority="high"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -144,8 +153,8 @@ export default function MontajAcopersuriPage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Tipuri de Acoperișuri</h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Tipuri de Acoperișuri</h2>
+            <p className="mt-4 text-lg text-secondary-foreground/80">
               Montăm toate tipurile de acoperișuri, adaptate nevoilor și bugetului tău
             </p>
           </AnimatedSection>
@@ -153,17 +162,19 @@ export default function MontajAcopersuriPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {roofTypes.map((type, index) => (
               <AnimatedSection key={type.title} animation="fade-in-up" delay={index * 100}>
-                <Card className="group h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <div className="overflow-hidden">
-                    <img
+                <Card className="group h-full overflow-hidden border-white/10 bg-secondary text-secondary-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
                       src={type.image || "/placeholder.svg"}
                       alt={type.title}
-                      className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <CardContent className="p-6">
                     <h3 className="mb-2 font-serif text-xl font-semibold">{type.title}</h3>
-                    <p className="text-sm text-muted-foreground">{type.description}</p>
+                    <p className="text-sm text-secondary-foreground/80">{type.description}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -173,11 +184,11 @@ export default function MontajAcopersuriPage() {
       </section>
 
       {/* Models Available */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-secondary py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Modele Disponibile</h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <h2 className="font-serif text-3xl font-bold text-secondary-foreground lg:text-4xl">Modele Disponibile</h2>
+            <p className="mt-4 text-lg text-secondary-foreground/80">
               Oferim o gamă variată de modele de țiglă metalică pentru orice stil arhitectural
             </p>
           </AnimatedSection>
@@ -196,10 +207,10 @@ export default function MontajAcopersuriPage() {
           </AnimatedSection>
 
           <AnimatedSection className="mt-8 text-center">
-            <p className="text-muted-foreground">
+            <p className="text-secondary-foreground/80">
               Disponibile în finisaje: <strong>Lucios, Mat, Lucios 8003, Lemn, Grande Mat</strong>
             </p>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-secondary-foreground/80">
               Grosimi disponibile: <strong>0.4mm, 0.45mm, 0.5mm, 0.6mm</strong>
             </p>
           </AnimatedSection>
@@ -217,11 +228,11 @@ export default function MontajAcopersuriPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {benefits.map((benefit, index) => (
               <AnimatedSection key={benefit.title} animation="fade-in-up" delay={index * 100}>
-                <Card className="h-full text-center">
+                <Card className="h-full border-primary/20 bg-primary text-center text-primary-foreground">
                   <CardContent className="p-8">
                     <benefit.icon className="mx-auto mb-4 h-12 w-12 text-primary" />
                     <h3 className="mb-2 font-serif text-xl font-semibold">{benefit.title}</h3>
-                    <p className="text-muted-foreground">{benefit.description}</p>
+                    <p className="text-primary-foreground/90">{benefit.description}</p>
                   </CardContent>
                 </Card>
               </AnimatedSection>
@@ -231,7 +242,7 @@ export default function MontajAcopersuriPage() {
       </section>
 
       {/* Process */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-background py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-bold text-foreground lg:text-4xl">Procesul de Montaj</h2>
@@ -252,7 +263,7 @@ export default function MontajAcopersuriPage() {
                       <h3 className="font-serif text-xl font-semibold">{item.title}</h3>
                       <p className="mt-2 text-muted-foreground">{item.description}</p>
                     </div>
-                    <div className="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                    <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
                       {item.step}
                     </div>
                     <div className="flex-1 lg:hidden">
@@ -288,9 +299,9 @@ export default function MontajAcopersuriPage() {
                 className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary bg-transparent"
                 asChild
               >
-                <a href="tel:+40756811640" className="flex items-center gap-2">
+                <a href={`tel:${phoneE164}`} className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  0756 811 640
+                  {phoneDisplay}
                 </a>
               </Button>
             </div>

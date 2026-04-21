@@ -8,9 +8,22 @@ interface AnimatedSectionProps {
   className?: string
   animation?: "fade-in-up" | "fade-in" | "slide-in-left" | "slide-in-right" | "scale-in"
   delay?: number
+  /** When true, skip intersection observer and opacity-0 so above-the-fold LCP can paint immediately. */
+  immediate?: boolean
 }
 
-export function AnimatedSection({ children, className, animation = "fade-in-up", delay = 0 }: AnimatedSectionProps) {
+export function AnimatedSection({
+  children,
+  className,
+  animation = "fade-in-up",
+  delay = 0,
+  immediate = false,
+}: AnimatedSectionProps) {
+  // Above-the-fold hero: render without hiding content (better LCP / FCP).
+  if (immediate) {
+    return <div className={className}>{children}</div>
+  }
+
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 

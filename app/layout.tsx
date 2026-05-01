@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import Script from "next/script"
 import { Inter, Source_Serif_4 } from "next/font/google"
 
 import { Analytics } from "@vercel/analytics/next"
@@ -64,6 +65,16 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <body className={`${sourceSerif.variable} ${inter.variable} font-sans antialiased`}>
+        {/* Google Ads global site tag: loads after hydration without blocking page rendering. */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-18108989386" strategy="afterInteractive" />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18108989386');
+          `}
+        </Script>
         <JsonLd />
         <Header />
         <main>{children}</main>

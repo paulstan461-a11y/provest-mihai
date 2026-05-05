@@ -73,6 +73,28 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-18108989386');
+            // Google Ads call tracking config for the configured conversion label.
+            gtag('config', 'AW-18108989386/OrmSCKPzoqccEMr_hLtD', {
+              'phone_conversion_number': '0756811640'
+            });
+          `}
+        </Script>
+        <Script id="google-ads-phone-click-tracking" strategy="afterInteractive">
+          {`
+            // Register once to avoid duplicate conversion events on re-renders/navigation.
+            if (!window.__acopvestPhoneConversionListener) {
+              window.__acopvestPhoneConversionListener = true;
+              document.addEventListener('click', function(event) {
+                var target = event.target;
+                if (!target || typeof target.closest !== 'function') return;
+                // Delegate to any phone anchor so desktop/mobile variants are both tracked.
+                var phoneLink = target.closest('a[href^="tel:"]');
+                if (!phoneLink || typeof window.gtag !== 'function') return;
+                window.gtag('event', 'conversion', {
+                  'send_to': 'AW-18108989386/OrmSCKPzoqccEMr_hLtD'
+                });
+              }, { passive: true });
+            }
           `}
         </Script>
         <JsonLd />

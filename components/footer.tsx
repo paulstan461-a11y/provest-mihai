@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import {
   businessAddressLine,
+  businessName,
   coverageCounties,
   email,
   phoneDisplay,
@@ -29,10 +30,10 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                 <span className="font-serif text-xl font-bold text-primary-foreground">
-                  AV
+                  PA
                 </span>
               </div>
-              <span className="font-serif text-xl font-bold">Acopvest</span>
+              <span className="font-serif text-xl font-bold">{businessName}</span>
             </div>
             <p className="text-sm text-secondary-foreground/80">
               Experiență de peste 10 ani în montaj și reparații acoperișuri.
@@ -124,7 +125,7 @@ export function Footer() {
         <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-secondary-foreground/70">
-              © {new Date().getFullYear()} Acopvest. Toate drepturile rezervate.
+              © {new Date().getFullYear()} {businessName}. Toate drepturile rezervate.
             </p>
             <div className="flex gap-4">
               <Link

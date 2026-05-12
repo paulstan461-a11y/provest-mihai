@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Menu, Phone, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
-import { phoneDisplay, phoneE164 } from "@/lib/site-config"
+import { businessName, phoneDisplay, phoneE164 } from "@/lib/site-config"
 
 const navigation = [
   { name: "Acasă", href: "/" },
@@ -26,10 +26,10 @@ export function Header() {
         <div className="flex h-16 items-center justify-between lg:h-20">
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <span className="font-serif text-xl font-bold text-primary-foreground">AV</span>
+              <span className="font-serif text-xl font-bold text-primary-foreground">PA</span>
             </div>
             <div className="hidden sm:block">
-              <span className="font-serif text-xl font-bold text-secondary-foreground">Acopvest</span>
+              <span className="font-serif text-xl font-bold text-secondary-foreground">{businessName}</span>
               <p className="text-xs text-secondary-foreground/75">Acoperișuri de Încredere</p>
             </div>
           </Link>

@@ -2,9 +2,10 @@
  * Central business, coverage, and URL constants for SEO, NAP consistency, and UI.
  * Update locality here if the physical base changes.
  */
-export const siteUrl = "https://acopvest.ro"
+export const siteUrl = "https://provest-acoperis.ro"
 
-export const businessName = "Acopvest"
+/** Legal / display name (header, footer, JSON-LD). */
+export const businessName = "Provest Acoperis"
 
 /** Orașe where services are offered (display strings with diacritics). */
 export const coverageLocations = [
@@ -68,7 +69,7 @@ export const defaultSiteKeywords = [
   "acoperiș România",
   "dulgherie acoperiș",
   "mansardări",
-  "Acopvest",
+  "Provest Acoperis",
   "Satu Mare",
   "Cluj",
   "Brașov",
